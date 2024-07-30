@@ -5,7 +5,7 @@ import numpy as np
 import HandTrackingModule as htm
 import math
 
-###### PYCAW CODE-
+###### PYCAW CODE FOR VOLUME CONTROL-
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 devices = AudioUtilities.GetSpeakers()
