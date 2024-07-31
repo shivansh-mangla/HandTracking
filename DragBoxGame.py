@@ -11,6 +11,22 @@ cx, cy, w, h = 150, 150, 200, 200
 
 detector = htm.handDetector(detectionConf=0.7)
 
+class dragRect():
+    def __init__(self, positionCentre, size=(200, 200)):
+        self.positionCentre = positionCentre
+        self.size = size
+
+    def update(self, cursor):
+        cx, cy = self.positionCentre
+        w, h = self.size
+
+        if cx-w//2 < x < cx+w//2 and cy-h//2 < y < cy+h//2:
+            defaultColor = (0, 255, 0)
+            self.positionCentre = cursor
+
+
+rect = dragRect((150, 150))
+
 while True:
     success, img = cap.read()
     defaultColor = (255, 0, 255)  # When not dragging
@@ -26,10 +42,11 @@ while True:
         if distance < 40:
             cursor = (lmList[8][1], lmList[8][2])  # X AND Y OF CURSOR
             x, y = cursor[0], cursor[1]
-            if cx-w//2 < x < cx+w//2 and cy-h//2 < y < cy+h//2:
-                defaultColor = (0, 255, 0)
-                cx, cy = cursor
+            rect.update(cursor)
 
+
+    cx, cy = rect.positionCentre
+    w, h = rect.size
     cv2.rectangle(img, (cx-w//2, cy-h//2), (cx+w//2, cy+h//2), defaultColor, cv2.FILLED)
 
     cv2.imshow("Image", img)
