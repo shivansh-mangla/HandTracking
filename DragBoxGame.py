@@ -1,4 +1,5 @@
 import cv2
+import cvzone
 
 import HandTrackingModule
 import HandTrackingModule as htm
@@ -24,8 +25,9 @@ class dragRect():
             defaultColor = (0, 255, 0)
             self.positionCentre = cursor
 
-
-rect = dragRect((150, 150))
+rectList = []
+for i in range(5):
+    rectList.append(dragRect((i*250 + 150, 150)))
 
 while True:
     success, img = cap.read()
@@ -42,12 +44,15 @@ while True:
         if distance < 40:
             cursor = (lmList[8][1], lmList[8][2])  # X AND Y OF CURSOR
             x, y = cursor[0], cursor[1]
-            rect.update(cursor)
+            for rect in rectList:
+                rect.update(cursor)
 
 
-    cx, cy = rect.positionCentre
-    w, h = rect.size
-    cv2.rectangle(img, (cx-w//2, cy-h//2), (cx+w//2, cy+h//2), defaultColor, cv2.FILLED)
+    for rect in rectList:
+        cx, cy = rect.positionCentre
+        w, h = rect.size
+        cv2.rectangle(img, (cx-w//2, cy-h//2), (cx+w//2, cy+h//2), defaultColor, cv2.FILLED)
+        cvzone.cornerRect(img, (cx-w//2, cy-h//2, w, h))
 
     cv2.imshow("Image", img)
     cv2.waitKey(1)
