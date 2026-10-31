@@ -19,6 +19,17 @@ python3 -m http.server 8000 --directory web
 
 Then open <http://localhost:8000> in a supported browser. The browser app is organized under `web/`; shared camera tracking is in `web/hand-tracking.js`, and activity-specific logic is under `web/activities/`. No frontend packages or build step are required. The Google Fonts import is optional; the page falls back to system sans-serif fonts if fonts cannot be loaded.
 
+## Run with Docker
+
+Build and run the static web app from the repository root:
+
+```sh
+docker build -t hand-studio .
+docker run -d --name hand-studio --restart unless-stopped -p 8080:80 hand-studio
+```
+
+Open <http://localhost:8080> to check it locally. On a homelab, put the container behind a reverse proxy that provides HTTPS and forward traffic to its port 80. Browser camera access requires HTTPS except on `localhost`, and each visitor must grant camera permission in their browser. The camera and hand tracking run on the visitor's device; the server does not need a camera. The browser also needs outbound access to jsDelivr and Google Cloud Storage to download the MediaPipe runtime and model on first use.
+
 ## Run the Python experiments
 
 The Python camera demos are independent from the web app and live under `python/`. Install their cross-platform dependencies:
