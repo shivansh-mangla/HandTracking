@@ -67,7 +67,7 @@
                 </svg>
               </span>
               <span class="card-title">Distance estimate</span>
-              <span class="card-description">Get a rough sense of distance from the size of your hand.</span>
+              <span class="card-description">Show a hand to see a live, rough distance estimate.</span>
               <span class="card-footer"><span class="card-tag">ESTIMATION</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
             </a>
 
@@ -82,7 +82,7 @@
                 </svg>
               </span>
               <span class="card-title">Drag-box game</span>
-              <span class="card-description">Pinch, pick up a box, and move it wherever you like.</span>
+              <span class="card-description">Pinch a box with your thumb and index finger to move it.</span>
               <span class="card-footer"><span class="card-tag">PINCH TO MOVE</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
             </a>
 
@@ -97,7 +97,7 @@
                 </svg>
               </span>
               <span class="card-title">Volume demo</span>
-              <span class="card-description">Use a pinch gesture to adjust an in-page audio volume.</span>
+              <span class="card-description">Adjust an optional in-page tone with a pinch or slider.</span>
               <span class="card-footer"><span class="card-tag">GESTURE CONTROL</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
             </a>
           </nav>
@@ -130,6 +130,12 @@
               <div class="camera-stage">
                 <video id="camera-video" autoplay playsinline muted aria-label="Mirrored live camera feed"></video>
                 <canvas id="landmark-canvas" aria-hidden="true"></canvas>
+                <div class="drag-board" id="drag-board" aria-hidden="true" hidden>
+                  <span class="drag-box box-coral" data-box="0">MOVE ME</span>
+                  <span class="drag-box box-violet" data-box="1">PINCH</span>
+                  <span class="drag-box box-green" data-box="2">LET GO</span>
+                  <span class="drag-cursor" id="drag-cursor"></span>
+                </div>
                 <span class="camera-badge"><span class="status-dot" aria-hidden="true"></span> LIVE PREVIEW</span>
                 <span class="fps-badge"><span id="hand-count">0</span> HANDS <span class="badge-divider">/</span> <span id="fps-value">—</span> FPS</span>
               </div>
@@ -144,6 +150,45 @@
                 </div>
               </div>
               <p class="privacy-note">Your camera feed is processed on this device and is not sent to a server. Hand tracking downloads its model the first time you start.</p>
+              <section class="activity-tools" id="distance-tools" aria-labelledby="distance-heading" hidden>
+                <div class="tool-heading">
+                  <div>
+                    <p class="tool-kicker">LIVE ESTIMATE</p>
+                    <h2 id="distance-heading">Hand-to-camera distance</h2>
+                  </div>
+                  <span class="estimate-value"><span id="distance-value">—</span> <span>cm</span></span>
+                </div>
+                <p class="tool-description" id="distance-status">Start the camera and show one hand to see an estimate.</p>
+                <p class="tool-disclaimer">Approximation based on the original demo’s hand-size calibration. Actual distance varies with hand size, camera, and lighting.</p>
+              </section>
+              <section class="activity-tools" id="drag-tools" aria-labelledby="drag-heading" hidden>
+                <div class="tool-heading">
+                  <div>
+                    <p class="tool-kicker">PINCH TO MOVE</p>
+                    <h2 id="drag-heading">Pick up a box</h2>
+                  </div>
+                  <span class="tool-count"><span id="boxes-moved">0</span> / 3 moved</span>
+                </div>
+                <p class="tool-description" id="drag-status">Start the camera, pinch a box with your thumb and index finger, then move your hand.</p>
+                <button class="reset-button" id="reset-boxes" type="button">Reset boxes</button>
+              </section>
+              <section class="activity-tools" id="volume-tools" aria-labelledby="volume-heading" hidden>
+                <div class="tool-heading">
+                  <div>
+                    <p class="tool-kicker">PINCH TO ADJUST</p>
+                    <h2 id="volume-heading">In-page demo volume</h2>
+                  </div>
+                  <span class="estimate-value"><span id="volume-value">35</span><span>%</span></span>
+                </div>
+                <label class="volume-label" for="volume-slider">Volume <span>Move your thumb and index finger, or use this slider.</span></label>
+                <input id="volume-slider" type="range" min="0" max="100" value="35">
+                <label class="gesture-toggle"><input id="gesture-volume" type="checkbox" checked> Use hand gestures to control volume</label>
+                <div class="volume-actions">
+                  <button class="camera-button" id="toggle-tone" type="button">Enable demo sound</button>
+                  <span class="tool-description" id="volume-status" role="status" aria-live="polite">Sound is off. Enable it to hear the gesture-controlled tone.</span>
+                </div>
+                <p class="tool-disclaimer">This only changes a generated tone in this page, not your device or server volume.</p>
+              </section>
             </section>
           </div>
         </section>

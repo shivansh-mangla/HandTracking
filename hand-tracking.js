@@ -92,6 +92,7 @@ export class HandTrackingSession {
 
       this.canvas.width = this.video.videoWidth;
       this.canvas.height = this.video.videoHeight;
+      this.video.parentElement.style.aspectRatio = `${this.canvas.width} / ${this.canvas.height}`;
       this.lastFrameTime = 0;
       this.smoothedFps = 0;
       this.onState("running", "Camera is on. Looking for a hand…");
@@ -115,7 +116,7 @@ export class HandTrackingSession {
     this.starting = false;
     this.releaseResources();
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.onFrame({ hands: 0, fps: 0 });
+    this.onFrame({ hands: 0, fps: 0, landmarks: [] });
     this.onState("idle", "Camera is off. Start when you’re ready.");
   }
 
@@ -135,7 +136,11 @@ export class HandTrackingSession {
 
     const result = this.landmarker.detectForVideo(this.video, now);
     this.drawLandmarks(result.landmarks ?? []);
-    this.onFrame({ hands: result.landmarks?.length ?? 0, fps: Math.round(this.smoothedFps) });
+    this.onFrame({
+      hands: result.landmarks?.length ?? 0,
+      fps: Math.round(this.smoothedFps),
+      landmarks: result.landmarks ?? []
+    });
     this.animationFrame = window.requestAnimationFrame(() => this.processFrame(generation));
   }
 
