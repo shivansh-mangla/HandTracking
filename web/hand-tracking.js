@@ -1,6 +1,6 @@
-const visionPackageUrl = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/vision_bundle.mjs";
-const visionWasmUrl = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.21/wasm";
-const handModelUrl = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
+const visionPackageUrl = new URL("./vendor/mediapipe/vision_bundle.mjs", import.meta.url).href;
+const visionWasmUrl = new URL("./vendor/mediapipe/wasm/", import.meta.url).href;
+const handModelUrl = new URL("./vendor/mediapipe/hand_landmarker.task", import.meta.url).href;
 
 const handConnections = [
   [0, 1], [1, 2], [2, 3], [3, 4],

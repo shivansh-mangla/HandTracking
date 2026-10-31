@@ -7,7 +7,9 @@ Hand Studio is a small web interface for hand-tracking experiments. It provides 
 - **Drag-box game** — pinch with your thumb and index finger to pick up and move boxes.
 - **Volume demo** — control an optional in-page tone with a pinch gesture or slider. Turn off gesture control to adjust the slider while the camera is running. It does not change device or server volume.
 
-Each activity shares the same camera and hand-tracking layer. Camera access is requested only after you select **Start camera**. Video frames are processed in your browser and are not sent to a server. The first start downloads the MediaPipe hand-tracking runtime and model from their CDNs. Camera access requires HTTPS, except when testing on `localhost`. The menu does not request camera access.
+Each activity shares the same camera and hand-tracking layer. Camera access is requested only after you select **Start camera**. Video frames are processed in your browser and are not sent to a server. Results are approximate and can vary with the camera, device performance, lighting, distance, and hand position. Camera access requires HTTPS, except when testing on `localhost`. The menu does not request camera access.
+
+The MediaPipe Tasks Vision runtime, WebAssembly files, and hand model are bundled under `web/vendor/mediapipe/`, so the app does not fetch them from third-party CDNs at runtime. The runtime package is version 0.10.21; its Apache-2.0 license is included with the vendored files.
 
 ## Run the web app
 
@@ -21,14 +23,13 @@ Then open <http://localhost:8000> in a supported browser. The browser app is org
 
 ## Run with Docker
 
-Build and run the static web app from the repository root:
+Start the app using the included Compose configuration:
 
 ```sh
-docker build -t hand-studio .
-docker run -d --name hand-studio --restart unless-stopped -p 8080:80 hand-studio
+docker compose up -d --build
 ```
 
-Open <http://localhost:8080> to check it locally. On a homelab, put the container behind a reverse proxy that provides HTTPS and forward traffic to its port 80. Browser camera access requires HTTPS except on `localhost`, and each visitor must grant camera permission in their browser. The camera and hand tracking run on the visitor's device; the server does not need a camera. The browser also needs outbound access to jsDelivr and Google Cloud Storage to download the MediaPipe runtime and model on first use.
+The Compose file binds the app to `127.0.0.1:8085`, intended for a reverse proxy running on the same host. For a standalone container, build and run with `docker build -t hand-studio .` and `docker run -d --name hand-studio --restart unless-stopped -p 8080:80 hand-studio`, then open <http://localhost:8080>. For homelab access, use a reverse proxy that provides HTTPS. Browser camera access requires HTTPS except on `localhost`, and each visitor must grant camera permission in their browser. The camera and hand tracking run on the visitor's device; the server does not need a camera.
 
 ## Run the Python experiments
 

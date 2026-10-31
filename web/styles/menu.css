@@ -50,6 +50,14 @@ h1 span {
   line-height: 1.8;
 }
 
+.intro-disclaimer {
+  max-width: 465px;
+  margin: 11px 0 0;
+  color: #89877f;
+  font-size: 11px;
+  line-height: 1.65;
+}
+
 .section-heading {
   display: flex;
   align-items: flex-end;
@@ -240,3 +248,10 @@ h1 span {
   font-size: 13px;
 }
 
+.creator-credit {
+  color: #77766f;
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
