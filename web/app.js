@@ -37,7 +37,6 @@ const volumeValue = document.querySelector("#volume-value");
 const volumeStatus = document.querySelector("#volume-status");
 const gestureVolume = document.querySelector("#gesture-volume");
 const toggleToneButton = document.querySelector("#toggle-tone");
-let welcomeDialogShown = false;
 
 const dragActivity = new DragBoxActivity({
   board: dragBoard,
@@ -136,14 +135,13 @@ function renderRoute({ focusHeading = false } = {}) {
     volumeDemo.stop();
     homeView.hidden = false;
     activityView.hidden = true;
-    if (!welcomeDialogShown) {
+    if (!welcomeDialog.open) {
       welcomeDialog.showModal();
-      welcomeDialogShown = true;
     }
     document.title = "Hand Studio — choose an activity";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    if (focusHeading) {
+    if (focusHeading && !welcomeDialog.open) {
       document.querySelector("#page-title").focus();
     }
 
