@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f5f4ef">
+    <meta
+      name="description"
+      content="Choose a hand-tracking activity: explore landmarks, estimate distance, move boxes, or try gesture-controlled volume."
+    >
+    <title>Hand Studio — choose an activity</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="app.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#/" aria-label="Hand Studio home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M11 16V7.5a2 2 0 0 1 4 0V15 5.5a2 2 0 0 1 4 0V15 7a2 2 0 0 1 4 0v9-5a2 2 0 0 1 4 0v9c0 6-3.5 9-9 9h-1c-3 0-5-1.2-6.5-3.4L6.2 20a2 2 0 0 1 3.2-2.4L11 20v-4Z" transform="translate(-2 -2) scale(.9)" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>hand<span class="brand-light">studio</span></span>
+        </a>
+        <span class="header-note"><span class="status-dot" aria-hidden="true"></span> A little room to play</span>
+      </header>
+
+      <main id="main-content">
+        <section class="home-view" id="home-view" aria-labelledby="page-title">
+          <div class="intro">
+            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> YOUR HANDS, YOUR CONTROLS</p>
+            <h1 id="page-title" tabindex="-1">What would you<br><span>like to try?</span></h1>
+            <p class="intro-copy">Pick an activity to get started. Each one turns a simple hand gesture into something a little more interesting.</p>
+          </div>
+
+          <div class="section-heading">
+            <div>
+              <h2>Choose an activity</h2>
+              <p>Four small experiments, one pair of hands.</p>
+            </div>
+            <span class="activity-count">01 <span>/</span> 04</span>
+          </div>
+
+          <nav class="activity-grid" aria-label="Hand-tracking activities">
+            <a class="activity-card card-lilac" href="#/activity/hand-tracking">
+              <span class="card-topline"><span class="activity-number">01</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-art art-tracking" aria-hidden="true">
+                <svg viewBox="0 0 112 100" fill="none">
+                  <path d="M32 50V25a5 5 0 0 1 10 0v20-28a5 5 0 0 1 10 0v28-34a5 5 0 0 1 10 0v34-27a5 5 0 0 1 10 0v33-16a5 5 0 0 1 10 0v18c0 18-11 29-28 29h-3c-11 0-18-5-24-14L17 58a5 5 0 0 1 9-5l6 10V50Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <circle cx="32" cy="50" r="3" fill="currentColor"/><circle cx="42" cy="25" r="3" fill="currentColor"/><circle cx="52" cy="17" r="3" fill="currentColor"/><circle cx="62" cy="11" r="3" fill="currentColor"/><circle cx="72" cy="18" r="3" fill="currentColor"/>
+                  <path d="m32 50 10-25 10-8 10-6 10 7" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4" opacity=".55"/>
+                </svg>
+              </span>
+              <span class="card-title">Hand tracking</span>
+              <span class="card-description">See your hand landmarks come to life, in real time.</span>
+              <span class="card-footer"><span class="card-tag">LANDMARKS</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
+            </a>
+
+            <a class="activity-card card-peach" href="#/activity/distance-estimate">
+              <span class="card-topline"><span class="activity-number">02</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-art art-distance" aria-hidden="true">
+                <svg viewBox="0 0 112 100" fill="none">
+                  <path d="M37 67V37a5 5 0 0 1 10 0v20-27a5 5 0 0 1 10 0v28-34a5 5 0 0 1 10 0v34-23a5 5 0 0 1 10 0v30c0 14-9 23-23 23h-4c-9 0-14-4-19-11L21 60a5 5 0 0 1 8-6l8 10V67Z" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M19 27h18M19 22v10m18-10v10M77 20h17m-17-5v10m17-10v10M37 15v-5m0 0-4 4m4-4 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".65"/>
+                  <path d="M45 31h22" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2 4" opacity=".55"/>
+                </svg>
+              </span>
+              <span class="card-title">Distance estimate</span>
+              <span class="card-description">Get a rough sense of distance from the size of your hand.</span>
+              <span class="card-footer"><span class="card-tag">ESTIMATION</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
+            </a>
+
+            <a class="activity-card card-mint" href="#/activity/drag-box">
+              <span class="card-topline"><span class="activity-number">03</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-art art-drag" aria-hidden="true">
+                <svg viewBox="0 0 112 100" fill="none">
+                  <rect x="11" y="18" width="31" height="31" rx="8" stroke="currentColor" stroke-width="2.5" stroke-dasharray="4 4" opacity=".5"/>
+                  <rect x="67" y="51" width="35" height="35" rx="9" stroke="currentColor" stroke-width="2.5"/>
+                  <path d="M35 72V53a4 4 0 0 1 8 0v13-21a4 4 0 0 1 8 0v21-25a4 4 0 0 1 8 0v25-16a4 4 0 0 1 8 0v22c0 11-7 18-18 18h-3c-7 0-12-3-16-9l-7-10a4 4 0 0 1 7-5l5 7V72Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="m45 54 28 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 5" opacity=".55"/>
+                </svg>
+              </span>
+              <span class="card-title">Drag-box game</span>
+              <span class="card-description">Pinch, pick up a box, and move it wherever you like.</span>
+              <span class="card-footer"><span class="card-tag">PINCH TO MOVE</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
+            </a>
+
+            <a class="activity-card card-blue" href="#/activity/volume-control">
+              <span class="card-topline"><span class="activity-number">04</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+              <span class="card-art art-volume" aria-hidden="true">
+                <svg viewBox="0 0 112 100" fill="none">
+                  <path d="M20 43h14l18-15v44L34 57H20V43Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                  <path d="M64 39c5 5 5 17 0 22m9-31c10 10 10 30 0 40m9-49c15 15 15 43 0 58" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                  <path d="M32 77h59" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+                  <circle cx="71" cy="77" r="5" fill="currentColor"/>
+                </svg>
+              </span>
+              <span class="card-title">Volume demo</span>
+              <span class="card-description">Use a pinch gesture to adjust an in-page audio volume.</span>
+              <span class="card-footer"><span class="card-tag">GESTURE CONTROL</span><span class="card-cta">Explore activity <span aria-hidden="true">→</span></span></span>
+            </a>
+          </nav>
+
+          <footer class="home-footer">
+            <span>HAND STUDIO <span class="footer-divider">/</span> A COLLECTION OF SMALL EXPERIMENTS</span>
+            <span class="camera-note"><span class="camera-icon" aria-hidden="true">◉</span> Camera stays off on this menu</span>
+          </footer>
+        </section>
+
+        <section class="activity-view" id="activity-view" aria-labelledby="activity-title" hidden>
+          <a class="back-link" href="#/"><span aria-hidden="true">←</span> All activities</a>
+          <div class="preview-panel">
+            <div class="preview-copy">
+              <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span><span id="activity-category">ACTIVITY PREVIEW</span></p>
+              <h1 id="activity-title" tabindex="-1">Activity</h1>
+              <p class="intro-copy" id="activity-description"></p>
+              <p class="preview-note" id="preview-note">This activity is a preview for now. Its interactive experience will be added in a future update.</p>
+              <a class="back-button" href="#/">Back to activities <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="preview-art" id="preview-art" aria-hidden="true">
+              <span class="preview-orbit orbit-one"></span>
+              <span class="preview-orbit orbit-two"></span>
+              <span class="preview-spark spark-one">✳</span>
+              <span class="preview-spark spark-two">✳</span>
+              <span class="preview-hand">✋</span>
+              <span class="preview-label">A LITTLE<br>EXPERIMENT</span>
+            </div>
+            <section class="tracking-panel" id="tracking-panel" aria-label="Live hand tracking" hidden>
+              <div class="camera-stage">
+                <video id="camera-video" autoplay playsinline muted aria-label="Mirrored live camera feed"></video>
+                <canvas id="landmark-canvas" aria-hidden="true"></canvas>
+                <span class="camera-badge"><span class="status-dot" aria-hidden="true"></span> LIVE PREVIEW</span>
+                <span class="fps-badge"><span id="hand-count">0</span> HANDS <span class="badge-divider">/</span> <span id="fps-value">—</span> FPS</span>
+              </div>
+              <div class="tracking-controls">
+                <div>
+                  <p class="tracking-status" id="tracking-status" role="status" aria-live="polite">Camera is off. Start when you’re ready.</p>
+                  <p class="tracking-error" id="tracking-error" role="alert" hidden></p>
+                </div>
+                <div class="tracking-actions">
+                  <button class="camera-button" id="start-camera" type="button">Start camera <span aria-hidden="true">→</span></button>
+                  <button class="camera-button camera-button-secondary" id="stop-camera" type="button" hidden>Stop camera</button>
+                </div>
+              </div>
+              <p class="privacy-note">Your camera feed is processed on this device and is not sent to a server. Hand tracking downloads its model the first time you start.</p>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
