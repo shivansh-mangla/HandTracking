@@ -6,6 +6,8 @@ import { VolumeDemo } from "./activities/volume-demo.js";
 
 const homeView = document.querySelector("#home-view");
 const activityView = document.querySelector("#activity-view");
+const welcomeDialog = document.querySelector("#welcome-dialog");
+const preloadStatus = document.querySelector("#preload-status");
 const activityTitle = document.querySelector("#activity-title");
 const activityCategory = document.querySelector("#activity-category");
 const activityDescription = document.querySelector("#activity-description");
@@ -35,6 +37,7 @@ const volumeValue = document.querySelector("#volume-value");
 const volumeStatus = document.querySelector("#volume-status");
 const gestureVolume = document.querySelector("#gesture-volume");
 const toggleToneButton = document.querySelector("#toggle-tone");
+let welcomeDialogShown = false;
 
 const dragActivity = new DragBoxActivity({
   board: dragBoard,
@@ -90,6 +93,13 @@ const handTrackingSession = new HandTrackingSession({
     trackingStatus.textContent = state === "error" ? "Camera could not start." : message;
     trackingError.hidden = state !== "error";
     trackingError.textContent = state === "error" ? message : "";
+    if (state === "loading") {
+      preloadStatus.textContent = "Preparing hand tracking and requesting camera access…";
+    } else if (state === "running") {
+      preloadStatus.textContent = "Hand tracking is ready.";
+    } else if (state === "error") {
+      preloadStatus.textContent = `Hand tracking could not start: ${message}`;
+    }
     startCameraButton.hidden = state === "running";
     startCameraButton.disabled = state === "loading";
     startCameraButton.textContent = state === "loading" ? "Preparing camera…" : "Start camera →";
@@ -108,6 +118,16 @@ const handTrackingSession = new HandTrackingSession({
   onFrame: updateActivityFrame
 });
 
+void handTrackingSession.preload().then(
+  () => {
+    preloadStatus.textContent = "Hand tracking is ready.";
+  },
+  (error) => {
+    const message = error instanceof Error ? error.message : "an unexpected error occurred";
+    preloadStatus.textContent = `Hand tracking could not be prepared: ${message}`;
+  }
+);
+
 function renderRoute({ focusHeading = false } = {}) {
   const activity = currentActivity();
 
@@ -116,6 +136,10 @@ function renderRoute({ focusHeading = false } = {}) {
     volumeDemo.stop();
     homeView.hidden = false;
     activityView.hidden = true;
+    if (!welcomeDialogShown) {
+      welcomeDialog.showModal();
+      welcomeDialogShown = true;
+    }
     document.title = "Hand Studio — choose an activity";
     window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -131,6 +155,9 @@ function renderRoute({ focusHeading = false } = {}) {
   }
 
   activityTitle.textContent = activity.title;
+  if (welcomeDialog.open) {
+    welcomeDialog.close();
+  }
   activityCategory.textContent = activity.category;
   activityDescription.textContent = activity.description;
   previewNote.hidden = true;

@@ -13,6 +13,17 @@
     <script type="module" src="app.js"></script>
   </head>
   <body>
+    <dialog class="welcome-dialog" id="welcome-dialog" aria-labelledby="welcome-title" aria-describedby="welcome-description">
+      <div class="welcome-dialog-content">
+        <p class="welcome-kicker">WELCOME TO HAND STUDIO</p>
+        <h2 id="welcome-title">A little room to play.</h2>
+        <p class="welcome-credit">Created by <strong>Shivansh Mangla</strong></p>
+        <p class="welcome-description" id="welcome-description">Hand Studio is a collection of playful experiments that use hand tracking to explore landmarks, estimate distance, move boxes, and control an in-page tone. Camera frames stay on your device; results are approximate and can vary by camera and device.</p>
+        <form method="dialog">
+          <button class="camera-button" type="submit">Explore activities <span aria-hidden="true">→</span></button>
+        </form>
+      </div>
+    </dialog>
     <div class="page-shell">
       <header class="site-header">
         <a class="brand" href="#/" aria-label="Hand Studio home">
@@ -33,6 +44,7 @@
             <h1 id="page-title" tabindex="-1">What would you<br><span>like to try?</span></h1>
             <p class="intro-copy">Pick an activity to get started. Each one turns a simple hand gesture into something a little more interesting.</p>
             <p class="intro-disclaimer">Results are approximate. Accuracy and smoothness can vary with your camera, device performance, lighting, distance, and hand position.</p>
+            <p class="preload-status" id="preload-status" role="status" aria-live="polite">Preparing hand tracking in the background…</p>
           </div>
 
           <div class="section-heading">

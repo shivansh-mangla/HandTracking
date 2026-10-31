@@ -2,6 +2,68 @@
   padding-top: 70px;
 }
 
+.welcome-dialog {
+  width: min(460px, calc(100% - 32px));
+  padding: 0;
+  overflow: visible;
+  border: 1px solid #e8e6df;
+  border-radius: 16px;
+  background: #f9f8f4;
+  color: var(--ink);
+  box-shadow: 0 24px 80px rgb(34 31 44 / 24%);
+}
+
+.welcome-dialog::backdrop {
+  background: rgb(36 35 31 / 48%);
+  backdrop-filter: blur(3px);
+}
+
+.welcome-dialog-content {
+  padding: 34px;
+}
+
+.welcome-kicker {
+  margin-bottom: 12px;
+  color: #77766f;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.welcome-dialog h2 {
+  margin-bottom: 10px;
+  font-family: var(--display);
+  font-size: clamp(26px, 7vw, 34px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+}
+
+.welcome-credit {
+  margin-bottom: 16px;
+  color: #6254a8;
+  font-size: 13px;
+}
+
+.welcome-credit strong {
+  font-weight: 700;
+}
+
+.welcome-description {
+  margin-bottom: 22px;
+  color: #68665f;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.welcome-dialog form {
+  margin: 0;
+}
+
+.welcome-dialog button {
+  min-height: 44px;
+}
+
 .intro {
   max-width: 570px;
 }
@@ -56,6 +118,15 @@ h1 span {
   color: #89877f;
   font-size: 11px;
   line-height: 1.65;
+}
+
+.preload-status {
+  max-width: 465px;
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  color: #77766f;
+  font-size: 11px;
+  line-height: 1.5;
 }
 
 .section-heading {
@@ -254,4 +325,10 @@ h1 span {
   font-size: 11px;
   letter-spacing: 0;
   white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .welcome-dialog-content {
+    padding: 26px 22px;
+  }
 }

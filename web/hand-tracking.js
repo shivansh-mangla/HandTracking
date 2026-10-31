@@ -1,6 +1,48 @@
 const visionPackageUrl = new URL("./vendor/mediapipe/vision_bundle.mjs", import.meta.url).href;
-const visionWasmUrl = new URL("./vendor/mediapipe/wasm/", import.meta.url).href;
+const visionWasmUrl = new URL("./vendor/mediapipe/wasm", import.meta.url).href;
 const handModelUrl = new URL("./vendor/mediapipe/hand_landmarker.task", import.meta.url).href;
+
+async function loadHandTrackingAssets() {
+  const [{ FilesetResolver, HandLandmarker }, response] = await Promise.all([
+    import(visionPackageUrl),
+    fetch(handModelUrl)
+  ]);
+  if (!response.ok) {
+    throw new Error(`Could not load the hand-tracking model (${response.status}).`);
+  }
+
+  const [vision, modelBuffer] = await Promise.all([
+    FilesetResolver.forVisionTasks(visionWasmUrl),
+    response.arrayBuffer()
+  ]);
+  return { HandLandmarker, vision, modelAssetBuffer: new Uint8Array(modelBuffer) };
+}
+
+let handTrackingAssetsPromise;
+let handLandmarkerPromise;
+
+function prepareHandLandmarker() {
+  if (!handLandmarkerPromise) {
+    handTrackingAssetsPromise ??= loadHandTrackingAssets();
+    handLandmarkerPromise = handTrackingAssetsPromise
+      .then(({ HandLandmarker, vision, modelAssetBuffer }) =>
+        HandLandmarker.createFromOptions(vision, {
+          baseOptions: { modelAssetBuffer },
+          runningMode: "VIDEO",
+          numHands: 2,
+          minHandDetectionConfidence: 0.5,
+          minHandPresenceConfidence: 0.5,
+          minTrackingConfidence: 0.5
+        })
+      )
+      .catch((error) => {
+        handLandmarkerPromise = null;
+        handTrackingAssetsPromise = null;
+        throw error;
+      });
+  }
+  return handLandmarkerPromise;
+}
 
 const handConnections = [
   [0, 1], [1, 2], [2, 3], [3, 4],
@@ -33,7 +75,7 @@ export class HandTrackingSession {
 
     const generation = ++this.generation;
     this.starting = true;
-    this.onState("loading", "Loading hand tracking and starting your camera…");
+    this.onState("loading", "Preparing hand tracking and requesting camera access…");
 
     let landmarker;
     try {
@@ -45,28 +87,12 @@ export class HandTrackingSession {
         throw new Error("This browser does not support camera access.");
       }
 
-      const { FilesetResolver, HandLandmarker } = await import(visionPackageUrl);
+      landmarker = await prepareHandLandmarker();
       if (generation !== this.generation) {
         return;
       }
-
-      const vision = await FilesetResolver.forVisionTasks(visionWasmUrl);
-      if (generation !== this.generation) {
-        return;
-      }
-
-      landmarker = await HandLandmarker.createFromOptions(vision, {
-        baseOptions: { modelAssetPath: handModelUrl },
-        runningMode: "VIDEO",
-        numHands: 2,
-        minHandDetectionConfidence: 0.5,
-        minHandPresenceConfidence: 0.5,
-        minTrackingConfidence: 0.5
-      });
-      if (generation !== this.generation) {
-        landmarker.close();
-        return;
-      }
+      handLandmarkerPromise = null;
+      this.landmarker = landmarker;
 
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: false,
@@ -78,11 +104,9 @@ export class HandTrackingSession {
       });
       if (generation !== this.generation) {
         stream.getTracks().forEach((track) => track.stop());
-        landmarker.close();
         return;
       }
 
-      this.landmarker = landmarker;
       this.stream = stream;
       this.video.srcObject = stream;
       await this.video.play();
@@ -109,6 +133,10 @@ export class HandTrackingSession {
         this.starting = false;
       }
     }
+  }
+
+  async preload() {
+    await prepareHandLandmarker();
   }
 
   stop() {
